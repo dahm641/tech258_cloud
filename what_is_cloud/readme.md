@@ -23,7 +23,7 @@ Find up to 3 case studies showing how businesses have migrated to the cloud or u
 
 ![img_4.png](img_4.png)
 
-Essentially it is any computing service you may need delivered over the internet. This could be from storage for your phone like Icloud to sending an email all the way to using applications on remote servers. Companies might like this idea because they no longer have to worry about maintaining a datacentre and can pay a subscription and have a cloud provider provide them with servers and infrastructure.  
+Essentially it is any computing service you may need delivered over the internet. This could be from storage for your phone like Icloud to sending an email all the way to using applications on remote servers and storing data. The cloud term comes in when it is being done from a remote location over the internet. Companies might like this idea because they no longer have to worry about maintaining a datacentre and can pay a subscription and have a cloud provider provide them with servers and infrastructure.  
 
 ## Difference between on prem and cloud:
 
@@ -184,6 +184,12 @@ Cloud is about automating certain aspects. The cloud can do this because you hav
 
 ### Monitoring
 Monitoring is a huge part of cloud. Eery resource we set up can be monitored and many providers have built in solutions just for monitoring with whichevr metrics we'd like. Logs, costs, performance etc.
+
+
+## Examples
+
+2021
+Coca-Cola Andina Builds Data Lake on AWS, Increases Analytics Productivity by 80% for More Data-Driven Decision-Making
 
 [//]: # (### Below is the well architected framework from AWS on how a good infrastructure on the cloud should be. We can see how it relates to Devops )
 
