@@ -35,11 +35,11 @@ You can add whatever you want the system to run in user data, so we could instal
 
 ### 10. Connect using bash
 
-Click on your instance after launching it. Click connect (refresh if it's greyed out). 
+Click on your instance after launching it. Click connect (refresh if it's greyed out). <br><br>
 ![img_10.png](img_10.png)<br><br>
-Then click SSH client
+Then click SSH client<br><br>
 ![img_11.png](img_11.png)<br><br>
-Now open your bash terminal and go to where your private key is stored that we mentioned earlier. use `ls` to make sure your file is there
+Now open your bash terminal and go to where your private key is stored that we mentioned earlier. use `ls` to make sure your file is there <br><br>
 ![img_12.png](img_12.png)<br><br>
 Now copy the codes from the previous image from the AWS console. For me this is :
 ```
