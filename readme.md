@@ -1,4 +1,4 @@
-# How to launch Instance
+# How to launch AWS EC2 instance and install nginx
 ### 1. Navigate to AWS and use search bar to search EC2
 ![img.png](img.png)
 ### 2. Click launch instance
