@@ -23,7 +23,7 @@ Find up to 3 case studies showing how businesses have migrated to the cloud or u
 
 ![img_4.png](img_4.png)
 
-Essentially it is any computing service you may need delivered over the internet. This could be from storage for your phone like Icloud to sending an email all the way to using applications on remote servers and storing data. The cloud term comes in when it is being done from a remote location over the internet. Companies might like this idea because they no longer have to worry about maintaining a datacentre and can pay a subscription and have a cloud provider provide them with servers and infrastructure.  
+Essentially it is any computing service you may need delivered over the internet. This could be from storage for your phone like Icloud to sending an email all the way to using applications on remote servers and storing data. The cloud term comes in when it is being delivered from a remote location over the internet. Companies might like this idea because they no longer have to worry about maintaining a datacentre and can pay a subscription and have a cloud provider provide them with servers and infrastructure.  
 
 ## Difference between on prem and cloud:
 
@@ -33,6 +33,8 @@ Depends on who we are. If we are an end user who just wants the product I wouldn
 If I am involved in the IT infrastructure of a company I know which resources will be hosted where and generally I will need some authentication to access them and an ip address on url and dns settings to access it. I may need my companys network in order to authorise my credentials and authenticate me so that I can access a particular instance in the cloud. 
 
 #### The difference between on prem and cloud is simply where our compute services are coming from. On prem we are fully responsible for everything. In the cloud there is a shared responsibility (see shared responsibility model for respective cloud providers) 
+
+![img_8.png](img_8.png)
 
 ## Deployment models
 
@@ -168,7 +170,7 @@ The main provider is AWS but the gap is closing. Azure is becoming more popular 
 
 Depends on the use case entirely. Some services are faster on azure such as servers running with windows servers or microsoft databases. AWS is very flexible and has its own unique features. Oracle cloud is the best for oracle databases. Microsoft is the best for on prem hybrid set ups because it can work seamlessly with active directory and office products.
 
-#### In my opinion ist best to have a multicloud strategy so you get the best from each provider and avoid vendor lock in.
+#### In my opinion its best to have a multicloud strategy so you get the best from each provider and avoid vendor lock in.
 
 ## Four pillars of devops and how they link to cloud
 
@@ -188,10 +190,10 @@ Monitoring is a huge part of cloud. Eery resource we set up can be monitored and
 
 ## Examples
 
-2021
-Coca-Cola Andina Builds Data Lake on AWS, Increases Analytics Productivity by 80% for More Data-Driven Decision-Making
+![img_9.png](img_9.png)
+## Extra - Below is the well architected framework from AWS on how a good infrastructure on the cloud should be.
 
-[//]: # (### Below is the well architected framework from AWS on how a good infrastructure on the cloud should be. We can see how it relates to Devops )
+### Cloud providers want you to create good architecture for you and for them. It reduces waste from their side and saves you money and brings efficiency to your side
 
-[//]: # ()
-[//]: # (![img_1.png]&#40;img_1.png&#41;)
+
+![img_1.png](img_1.png)
