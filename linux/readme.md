@@ -3,6 +3,14 @@
 - `uname` = What os
 - `"command" --help` = Options for most commands
 - `whoami` = Current user
+- `sudo` Is super user do (permissions)
+- `sudo su` Logs in as super-user
+- `sudo apt update -y` Downloads latest packages
+- `sudo apt upgrade -y` Installs latest packages that have been downloaded
+- `sudo apt install "package" -y` Installs a specific downloaded package
+- `snap install tree` Installs a module called tree that can visually show you your directories and files. `snap` downloads and installs packages in one step.
+
+### File / directory commands
 - `curl` = Download stuff online. Can download files.
 - `file` = Checks file type
 - `mv` = Move / rename
@@ -12,6 +20,9 @@
 - `touch` = Create file
 - `cat` = Display contents of file
 - `nano` = Basic text editor
+- `cd` Changes directory. `cd` by itself goes home directory add `..` to move up a directory use `/` to go to root directory or specify any other path / directory
+- `pwd` Is current directory
+
 
 ### Example 
 
@@ -43,18 +54,5 @@ cat -n chicken_joke.txt
 grep "chicken" chicken_joke.txt
 ```
 
-`cd` Changes directory. `cd` by itself goes home directory add `..` to move up a directory use `/` to go to root directory or specify any other path / directory
 
-`pwd` Is current directory
 
-`sudo` Is super user do (permissions)
-
-`sudo su` Logs in as super-user
-
-`sudo apt update -y` Downloads latest packages
-
-`sudo apt upgrade -y` Installs latest packages that have been downloaded
-
-`sudo apt install "package" -y` Installs a specific downloaded package
-
-`snap install tree` Installs a module called tree that can visually show you your directories and files
