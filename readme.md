@@ -35,11 +35,11 @@ You can add whatever you want the system to run in user data, so we could instal
 
 ### 10. Connect using bash
 
-Click on your instance after launching it. Click connect (refresh if it's greyed out). <br><br>
+Click on your instance after launching it. Click connect (refresh if it's greyed out). 
 ![img_10.png](img_10.png)<br><br>
-Then click SSH client<br><br>
+Then click SSH client
 ![img_11.png](img_11.png)<br><br>
-Now open your bash terminal and go to where your private key is stored that we mentioned earlier. use `ls` to make sure your file is there <br><br>
+Now open your bash terminal and go to where your private key is stored that we mentioned earlier. use `ls` to make sure your file is there
 ![img_12.png](img_12.png)<br><br>
 Now copy the codes from the previous image from the AWS console. For me this is :
 ```
@@ -117,5 +117,6 @@ Nginx is like the waiter of your website or web application. It's a type of soft
 #### Overall, Nginx is a powerful tool for making sure your website runs smoothly, efficiently, and securely, even when you have a lot of traffic coming in.
 
 
-![img_22.png](images%2Fimg_22.png)
-![img_22.png](images%2Fimg_22.png)
+
+
+
