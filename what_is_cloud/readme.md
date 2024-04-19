@@ -21,7 +21,7 @@ Find up to 3 case studies showing how businesses have migrated to the cloud or u
 
 ## What is it?
 
-![img_4.png](img_4.png)
+![img_4.png](images%2Fimg_4.png)
 
 Essentially it is any computing service you may need delivered over the internet. This could be from storage for your phone like Icloud to sending an email all the way to using applications on remote servers and storing data. The cloud term comes in when it is being delivered from a remote location over the internet. Companies might like this idea because they no longer have to worry about maintaining a datacentre and can pay a subscription and have a cloud provider provide them with servers and infrastructure.  
 
@@ -34,7 +34,7 @@ If I am involved in the IT infrastructure of a company I know which resources wi
 
 #### The difference between on prem and cloud is simply where our compute services are coming from. On prem we are fully responsible for everything. In the cloud there is a shared responsibility (see shared responsibility model for respective cloud providers) 
 
-![img_8.png](img_8.png)
+![img_8.png](images%2Fimg_8.png)
 
 ## Deployment models
 
@@ -48,7 +48,7 @@ If I am involved in the IT infrastructure of a company I know which resources wi
 
 ## Types of cloud services
 
-![img_3.png](img_3.png)
+![img_3.png](images%2Fimg_3.png)
 
 ### Infrastructure as a Service (IaaS):
 
@@ -84,7 +84,7 @@ It allows me to focus on the business. This is one of the benefits of using clou
 - Scalability - Go global in minutes
 - Resilience - Resistance to failure (multiple AZ, Region pairs)
 - 
-![img.png](img.png)
+![img.png](images%2Fimg.png)
 
 ## Disadvantages
 
@@ -112,7 +112,7 @@ It allows me to focus on the business. This is one of the benefits of using clou
 - #### Vendor Lock-in: 
   - Moving data and applications to the cloud can create a dependency on a particular cloud service provider. Switching providers or migrating data between providers can be complex and costly, leading to vendor lock-in.
 
-![img_2.png](img_2.png)
+![img_2.png](images%2Fimg_2.png)
 
 ## Capex vs OPex
 
@@ -120,7 +120,7 @@ Cap ex is capital expenditure. This is usually upfront costs. Op Ex is operation
 
 It can also scale so if we need 5x power for a week for increased demand we dont have to fork out cap ex for new servers and upgrades that will be useless after a week. We can just pay for what we need and then scale back down.
 
-![img_5.png](img_5.png)
+![img_5.png](images%2Fimg_5.png)
 
 ### What do we usually pay for in the cloud?
 
@@ -138,7 +138,7 @@ Also if we have a fixed usage scenario that requires lots of comput power then i
 
 The main provider is AWS but the gap is closing. Azure is becoming more popular and then you have google and there are many others such as oracle cloud. 
 
-![img_6.png](img_6.png)
+![img_6.png](images%2Fimg_6.png)
 
 ### 3 top providers:
 
@@ -174,7 +174,7 @@ Depends on the use case entirely. Some services are faster on azure such as serv
 
 ## Four pillars of devops and how they link to cloud
 
-![img_7.png](img_7.png)
+![img_7.png](images%2Fimg_7.png)
 
 ### Communication 
 Can be eachieved using cloud apps such as Teams! 
@@ -190,10 +190,10 @@ Monitoring is a huge part of cloud. Eery resource we set up can be monitored and
 
 ## Examples
 
-![img_9.png](img_9.png)
+![img_9.png](images%2Fimg_9.png)
 ## Extra - Below is the well architected framework from AWS on how a good infrastructure on the cloud should be.
 
 ### Cloud providers want you to create good architecture for you and for them. It reduces waste from their side and saves you money and brings efficiency to your side
 
 
-![img_1.png](img_1.png)
+![img_1.png](images%2Fimg_1.png)
