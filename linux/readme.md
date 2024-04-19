@@ -69,9 +69,21 @@ chmod 4+2+1, 4+2, 4
 
 `chmod 764`
 
+### Scripts
+
 `#!` - used to start scripts - shebang
 
 `!#/bin/bash` choose bash shell to run script
+
+Can create a file using `nano` that starts with `!#` then add lines of script after.
+
+![img.png](img.png)
+
+### Variables
+
+can create varibales in normal way `variable = variable_value`
+
+call them using `$variable`
 
 `printenv` prints environment variables
 
