@@ -28,10 +28,12 @@
 
 #### Create a chicken joke
 
-`touch chicken-joke.txt`
+1. `touch chicken-joke.txt`
 
-`nano chicken-joke`
-#### Write out a basic chicken joke `ctrl x` and then ***enter*** to save
+Then
+
+2. `nano chicken-joke.txt`
+#### Write out a basic chicken joke on 3 lines then press ***ctrl + x*** and then ***enter*** to save
 
 
 
