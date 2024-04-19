@@ -117,6 +117,5 @@ Nginx is like the waiter of your website or web application. It's a type of soft
 #### Overall, Nginx is a powerful tool for making sure your website runs smoothly, efficiently, and securely, even when you have a lot of traffic coming in.
 
 
-
-
-
+![img_22.png](images%2Fimg_22.png)
+![img_22.png](images%2Fimg_22.png)
