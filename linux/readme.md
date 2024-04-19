@@ -1,6 +1,6 @@
 # Basic Commands
 
-- `uname` = What os
+- `uname` = What is current OS
 - `"command" --help` = Options for most commands
 - `whoami` = Current user
 - `sudo` Is super user do (permissions)
@@ -28,8 +28,9 @@
 
 #### Create a chicken joke
 
-`touch chicken_joke.txt`
-`nano chicken_joke`
+`touch chicken-joke.txt`
+
+`nano chicken-joke`
 #### Write out a basic chicken joke `ctrl x` and then ***enter*** to save
 
 
