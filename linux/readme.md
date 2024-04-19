@@ -33,7 +33,7 @@
 Then
 
 2. `nano chicken-joke.txt`
-#### Write out a basic chicken joke on 3 lines then press ***ctrl + x*** and then ***enter*** to save
+#### Write out a basic chicken joke on 3 lines then press ***ctrl + x*** to exit and then ***y*** to save then ***enter*** to save file name
 
 
 
@@ -57,5 +57,34 @@ cat -n chicken_joke.txt
 grep "chicken" chicken_joke.txt
 ```
 
+### `chmod` change permissions
+
+| user | group | everyone | : | read | write | execute |
+
+read is 4 write is 2 execute is 1 nothing is 0
+
+If we want user rwx group rw and everyone r
+
+chmod 4+2+1, 4+2, 4
+
+`chmod 764`
+
+`#!` - used to start scripts - shebang
+
+`!#/bin/bash` choose bash shell to run script
+
+`printenv` prints environment variables
+
+`export` can export variable to env variables
+
+to make it stay everytime (persistence)
+
+`nano .bashrc`
+
+add `export variablename_variablevalue` to the bottom
+
+exit and then 
+
+`source .bashrc`
 
 
