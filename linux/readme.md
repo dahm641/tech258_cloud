@@ -99,4 +99,18 @@ exit and then
 
 `source .bashrc`
 
+### Processes
+
+```
+ps #shows processes
+ps - aux #shows all processes
+top #shows currently running processes with times
+~ within top can sort using shift m for memory shift p for processor and shift n for newest~
+```
+
+#### parent process and child process
+
+if you kill parent child will remain as a zombie process
+
+
 
