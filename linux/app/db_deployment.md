@@ -53,7 +53,7 @@ echo "mongodb-mongosh hold" | sudo dpkg --set-selections
 echo "mongodb-org-mongos hold" | sudo dpkg --set-selections
 echo "mongodb-org-tools hold" | sudo dpkg --set-selections
 ```
-### 5. Start MongoDB
+## 5. Start MongoDB
 ```
 sudo systemctl start mongod
 ```
@@ -79,7 +79,7 @@ systemctl enable mongod.service
 Created symlink from /etc/systemd/system/multi-user.target.wants/mongod.service to /lib/systemd/system/mongod.service.
 ```
 
-### 6. configure bind ip in mongo db config file 0.0.0.0
+## 6. configure bind ip in mongo db config file 0.0.0.0
 ```
 sudo sed -i 's/^\(\s*\)bindIp: .*/\1bindIp: 0.0.0.0/' /etc/mongod.conf
 ```
@@ -92,12 +92,12 @@ This command uses sed to replace the bindIp setting in the MongoDB configuration
 - `/etc/mongod.conf` - The path to the MongoDB configuration file.
 - After running this command, MongoDB will listen for connections on all available network interfaces.
 
-### 7. Remember to restart the MongoDB service for the changes to take effect:
+## 7. Remember to restart the MongoDB service for the changes to take effect:
 ```
 sudo systemctl restart mongod
 ```
 
-## 8. complete DB Script 
+# 8. complete DB Script 
 
 ```
 #!/bin/bash
