@@ -1,3 +1,16 @@
+- [Basic Commands](#basic-commands)
+    - [File / directory commands](#file--directory-commands)
+    - [Example](#example)
+      - [Create a chicken joke](#create-a-chicken-joke)
+      - [Write out a basic chicken joke on 3 lines then press ***ctrl + x*** to exit and then ***y*** to save then ***enter*** to save file name](#write-out-a-basic-chicken-joke-on-3-lines-then-press-ctrl--x-to-exit-and-then-y-to-save-then-enter-to-save-file-name)
+    - [`chmod` change permissions](#chmod-change-permissions)
+    - [Scripts](#scripts)
+    - [Variables](#variables)
+    - [Processes](#processes)
+      - [parent process and child process](#parent-process-and-child-process)
+
+
+
 # Basic Commands
 
 - `uname` = What is current OS
@@ -108,9 +121,11 @@ top #shows currently running processes with times
 ~ within top can sort using shift m for memory shift p for processor and shift n for newest~
 ```
 
+
 #### parent process and child process
 
 if you kill parent child will remain as a zombie process
 
+kill using `kill` command
 
-
+exit processes with c or ctrl c or ctrl q

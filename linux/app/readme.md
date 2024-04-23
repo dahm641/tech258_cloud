@@ -110,5 +110,13 @@ sudo pm2 stop all
 sudo pm2 start app.js
 
 echo Done!
+```
+## after db server set up
 
+### set DB_HOST env variable:
+```
+export DB_HOST=mongodb://privateip:27017/posts
+sudo -E npm install
+sudo -E npm install -g pm2
+pm2 restart app.js
 ```
