@@ -26,6 +26,9 @@ sudo apt install git -y
 
 cd ~/tech258_sparta_test_app/app
 
+## set DB_HOST env variable:
+export DB_HOST=mongodb://privateip_db:27017/posts
+
 ## run in terminal 
 
 `npm install`
@@ -34,9 +37,11 @@ cd ~/tech258_sparta_test_app/app
 
 ## run without terminal needing to be open
 
-`sudo npm install -g pm2`
+`sudo -E npm install -g pm2` using `-E` allows sudo to use env variables
 
 `pm2 start app.js`
+
+
 
 
 # complete script for nginx and nodejs app
@@ -104,19 +109,16 @@ echo done
 
 echo running app
 
-sudo npm install
-sudo npm install -g pm2
+### set DB_HOST env variable:
+export DB_HOST=mongodb://172.31.94.168:27017/posts
+
+sudo -E npm install
+#node app.js &
+sudo -E npm install -g pm2
 sudo pm2 stop all
-sudo pm2 start app.js
+sudo -E pm2 start app.js
+sudo -E pm2 restart app.js
 
 echo Done!
 ```
-## after db server set up
 
-### set DB_HOST env variable:
-```
-export DB_HOST=mongodb://privateip:27017/posts
-sudo -E npm install
-sudo -E npm install -g pm2
-pm2 restart app.js
-```
