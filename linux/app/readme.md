@@ -2,6 +2,10 @@
 
 # install node.js
 
+Open instance and connect SSH.
+Run updates
+
+
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo DEBIAN_FRONTEND=noninteractive -E bash - &&\
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 
@@ -20,7 +24,7 @@ sudo apt install git -y
 
 ## cd app folder
 
-cd /app/tech_258_sparta_test_app/app
+cd ~/tech258_sparta_test_app/app
 
 ## run in terminal 
 
@@ -102,6 +106,7 @@ echo running app
 
 sudo npm install
 sudo npm install -g pm2
+sudo pm2 stop all
 sudo pm2 start app.js
 
 echo Done!
