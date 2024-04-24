@@ -1,6 +1,23 @@
-# how to set up nodejs app on server
+# How to set up nodejs app on server
 
-# install nginx 
+- [How to set up nodejs app on server](#how-to-set-up-nodejs-app-on-server)
+- [1. install nginx](#1-install-nginx)
+- [restart nginx](#restart-nginx)
+- [enable nginx](#enable-nginx)
+- [2. install node.js](#2-install-nodejs)
+- [3. upload documents using either:](#3-upload-documents-using-either)
+    - [scp](#scp)
+    - [GitHub](#github)
+  - [4. cd app folder](#4-cd-app-folder)
+  - [5. set DB\_HOST env variable:](#5-set-db_host-env-variable)
+  - [run in terminal](#run-in-terminal)
+  - [6. run without terminal needing to be open](#6-run-without-terminal-needing-to-be-open)
+  - [7. Set reverse proxy](#7-set-reverse-proxy)
+- [Complete script for nginx and nodejs app](#complete-script-for-nginx-and-nodejs-app)
+  - [Blockers](#blockers)
+
+
+# 1. install nginx 
 
 sudo DEBIAN_FRONTEND=noninteractive apt install nginx -y
 echo done!
@@ -18,7 +35,7 @@ sudo systemctl enable nginx
 echo done!
 
 
-# install node.js
+# 2. install node.js
 
 Open instance and connect SSH.
 Run updates
@@ -27,9 +44,10 @@ Run updates
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo DEBIAN_FRONTEND=noninteractive -E bash - &&\
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 
-# upload documents using either:
-### `scp -i /path/to/private_key -r /path/to/local/folder username@server_ip:/path/to/destination/folder`
-### or GitHub
+# 3. upload documents using either:
+### scp 
+```scp -i /path/to/private_key -r /path/to/local/folder username@server_ip:/path/to/destination/folder```
+### GitHub
 
 ```
 sudo apt update -y
@@ -40,11 +58,11 @@ sudo apt install git -y
 
 `git clone https://github.com/dahm641/tech258_sparta_test_app`
 
-## cd app folder
+## 4. cd app folder
 
 cd ~/tech258_sparta_test_app/app
 
-## set DB_HOST env variable:
+## 5. set DB_HOST env variable:
 export DB_HOST=mongodb://privateip_db:27017/posts
 
 ## run in terminal 
@@ -53,13 +71,13 @@ export DB_HOST=mongodb://privateip_db:27017/posts
 
 `node app.js &` & runs in background
 
-## run without terminal needing to be open
+## 6. run without terminal needing to be open
 
 `sudo -E npm install -g pm2` using `-E` allows sudo to use env variables
 
 `pm2 start app.js`
 
-## Set reverse proxy
+## 7. Set reverse proxy
 
 We want to do this so that when we go to our public ip, it automatically reroutes us to the port we want. We have to configure nginx to do this for us. 
 
@@ -92,7 +110,7 @@ sudo systemctl restart nginx
 ```
 
 
-# complete script for nginx and nodejs app
+# Complete script for nginx and nodejs app
 
 ```
 # Nginx script

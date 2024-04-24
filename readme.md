@@ -1,4 +1,30 @@
 # How to launch AWS EC2 instance and install nginx
+
+- [How to launch AWS EC2 instance and install nginx](#how-to-launch-aws-ec2-instance-and-install-nginx)
+    - [1. Navigate to AWS and use search bar to search EC2](#1-navigate-to-aws-and-use-search-bar-to-search-ec2)
+    - [2. Click launch instance](#2-click-launch-instance)
+    - [3. Give appropriate name](#3-give-appropriate-name)
+    - [4. Choose AMI](#4-choose-ami)
+    - [5. Choose instance type](#5-choose-instance-type)
+    - [6. Choose/Create key pair for login](#6-choosecreate-key-pair-for-login)
+    - [7. Configure security group](#7-configure-security-group)
+    - [8. Configure Storage](#8-configure-storage)
+    - [9. Launch the instance and connect to it](#9-launch-the-instance-and-connect-to-it)
+      - [NOTE:](#note)
+    - [10. Connect using bash](#10-connect-using-bash)
+      - [YOU ARE NOW CONNECTED FROM BASH TERMINAL!](#you-are-now-connected-from-bash-terminal)
+    - [11. install updates and nginx](#11-install-updates-and-nginx)
+      - [NOTE:](#note-1)
+    - [12. Ensure nginx is running](#12-ensure-nginx-is-running)
+      - [NGINX INSTALLED SUCCESSFULLY!](#nginx-installed-successfully)
+    - [13. Connect and see your webserver](#13-connect-and-see-your-webserver)
+      - [YOU HAVE NOW SUCCESSFULLY INSTALLED AND CONNECTED TO AN NGINX WEBSERVER HOSTED ON AN AWS EC2 INSTANCE! ](#you-have-now-successfully-installed-and-connected-to-an-nginx-webserver-hosted-on-an-aws-ec2-instance-)
+      - [If all other steps worked but you cant open in browser, check security group rules and ensure port 80 is open fot HTTP from anywhere (all IPs)](#if-all-other-steps-worked-but-you-cant-open-in-browser-check-security-group-rules-and-ensure-port-80-is-open-fot-http-from-anywhere-all-ips)
+    - [What is nginx?](#what-is-nginx)
+    - [Here's how it works: ](#heres-how-it-works-)
+      - [Overall, Nginx is a powerful tool for making sure your website runs smoothly, efficiently, and securely, even when you have a lot of traffic coming in.](#overall-nginx-is-a-powerful-tool-for-making-sure-your-website-runs-smoothly-efficiently-and-securely-even-when-you-have-a-lot-of-traffic-coming-in)
+
+
 ### 1. Navigate to AWS and use search bar to search EC2
 ![img.png](images%2Fimg.png)
 ### 2. Click launch instance

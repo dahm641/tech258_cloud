@@ -1,5 +1,27 @@
 # How to deploy db server
 
+- [How to deploy db server](#how-to-deploy-db-server)
+  - [1. Shebang](#1-shebang)
+  - [2. Update](#2-update)
+  - [3. Upgrade](#3-upgrade)
+  - [4. Install mongo db 7.0.6](#4-install-mongo-db-706)
+    - [4.1. Import the public key used by the package management system](#41-import-the-public-key-used-by-the-package-management-system)
+    - [4.2. Create a list file for MongoDB](#42-create-a-list-file-for-mongodb)
+    - [4.3 Reload local package database](#43-reload-local-package-database)
+    - [4.4 Install the latest MongoDB packages](#44-install-the-latest-mongodb-packages)
+    - [4.4 Install specific version](#44-install-specific-version)
+    - [Optional. Although you can specify any available version of MongoDB, apt-get will upgrade the packages when a newer version becomes available. To prevent unintended upgrades, you can pin the package at the currently installed version:](#optional-although-you-can-specify-any-available-version-of-mongodb-apt-get-will-upgrade-the-packages-when-a-newer-version-becomes-available-to-prevent-unintended-upgrades-you-can-pin-the-package-at-the-currently-installed-version)
+  - [5. Start MongoDB](#5-start-mongodb)
+    - [5.1 Verify that MongoDB has started successfully.](#51-verify-that-mongodb-has-started-successfully)
+    - [Restart MongoDB](#restart-mongodb)
+    - [Stop MongoDB.](#stop-mongodb)
+    - [Begin using MongoDB.](#begin-using-mongodb)
+    - [Ensure that it restarts automatically at each boot.](#ensure-that-it-restarts-automatically-at-each-boot)
+  - [6. configure bind ip in mongo db config file 0.0.0.0](#6-configure-bind-ip-in-mongo-db-config-file-0000)
+  - [7. Remember to restart the MongoDB service for the changes to take effect:](#7-remember-to-restart-the-mongodb-service-for-the-changes-to-take-effect)
+- [8. complete DB Script](#8-complete-db-script)
+
+
 ## 1. Shebang
 ```
 #!/bin/bash
