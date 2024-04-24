@@ -69,6 +69,8 @@ export DB_HOST=mongodb://privateip_db:27017/posts
 
 `npm install`
 
+npm is a node package manager and is needed for the node to run 
+
 `node app.js &` & runs in background
 
 ## 6. run without terminal needing to be open
@@ -76,6 +78,8 @@ export DB_HOST=mongodb://privateip_db:27017/posts
 `sudo -E npm install -g pm2` using `-E` allows sudo to use env variables
 
 `pm2 start app.js`
+
+pm2 is a process manager and can run the app using node package manager we installed earlier
 
 ## 7. Set reverse proxy
 
