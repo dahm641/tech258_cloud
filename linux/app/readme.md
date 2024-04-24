@@ -23,6 +23,6 @@ bash script.sh
 #### 4.  launch an app instance using instructions above. Ports 22, 3000 and 80 open from any IP. <br><br>
 #### 5. create script with code from number 8 [here](https://github.com/dahm641/tech258_cloud/blob/main/linux/app/app_deployment.md) <br><br>
 
-## :Warning: Ensure private IP is copied from DB server to DB_HOST variable <br><br>
+## :warning: Ensure private IP is copied from DB server to DB_HOST variable <br><br>
 #### 6. run script that you created in step 5 <br><br>
 #### 7. copy public ip of app server to check if all is working correctly. Ensure you use http:// before IP address 
