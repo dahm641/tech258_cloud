@@ -8,7 +8,7 @@
 ### To launch an instance please refer to this document. Follow until step 11 
  [https://github.com/dahm641/tech258_cloud/blob/main/readme.md](./installation)
 
-#### 3.  Once you have launched a mongo db instance please run the script in [/db_deployment.md](./installation.mdx)
+#### 3.  Once you have launched a mongo db instance please run the script in [https://github.com/dahm641/tech258_cloud/blob/main/linux/app/db_deployment.md](./installation)
 3.1. create a script file using 
 ```
 nano script.sh
@@ -19,7 +19,7 @@ bash script.sh
 ```
 
 #### 4.  launch an app instance using instructions above. Ports 22, 3000 and 80 open from any IP.
-#### 5.create script with code from [/app_deployment.md](./installation.mdx) 
+#### 5.create script with code from [https://github.com/dahm641/tech258_cloud/blob/main/linux/app/app_deployment.md](./installation)
 ## :warning: Ensure private IP is copied from DB server to DB_HOST variable
 #### 6. run script that you created in step 5
 #### 7. copy public ip of app server to check if all is working correctly. Ensure you use http:// before IP address 
