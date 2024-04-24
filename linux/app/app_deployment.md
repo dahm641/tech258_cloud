@@ -13,8 +13,8 @@
   - [run in terminal](#run-in-terminal)
   - [6. run without terminal needing to be open](#6-run-without-terminal-needing-to-be-open)
   - [7. Set reverse proxy](#7-set-reverse-proxy)
-- [Complete script for nginx and nodejs app](#complete-script-for-nginx-and-nodejs-app)
-  - [Blockers](#blockers)
+- [8. Complete script for nginx and nodejs app](#8-complete-script-for-nginx-and-nodejs-app)
+  - [9. Blockers](#9-blockers)
 
 
 # 1. install nginx 
@@ -110,7 +110,7 @@ sudo systemctl restart nginx
 ```
 
 
-# Complete script for nginx and nodejs app
+# 8. Complete script for nginx and nodejs app
 
 ```
 # Nginx script
@@ -210,7 +210,7 @@ echo  Done!
 
 ```
 
-## Blockers
+## 9. Blockers
 
 If nginx isnt working remove it and restart 
 
