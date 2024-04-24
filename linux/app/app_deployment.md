@@ -1,5 +1,23 @@
 # how to set up nodejs app on server
 
+# install nginx 
+
+sudo DEBIAN_FRONTEND=noninteractive apt install nginx -y
+echo done!
+
+
+# restart nginx
+echo restarting nginx...
+sudo systemctl restart nginx
+echo done!
+
+ 
+# enable nginx
+echo enabling nginx...
+sudo systemctl enable nginx
+echo done!
+
+
 # install node.js
 
 Open instance and connect SSH.
@@ -41,7 +59,37 @@ export DB_HOST=mongodb://privateip_db:27017/posts
 
 `pm2 start app.js`
 
+## Set reverse proxy
 
+We want to do this so that when we go to our public ip, it automatically reroutes us to the port we want. We have to configure nginx to do this for us. 
+
+Its good to make a back up of the default file incase of any errors.
+
+The default file is located here
+
+```
+/etc/nginx/sites-enabled/default
+```
+
+we can copy using cp command
+
+```
+sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default.bak
+```
+
+we then have to change the proxy_pass variable in the config file and set it to our port that we want. In this case 3000. we dont want to write out the private ip everytime so we can use localhost env variable to do this for us. 
+
+Instead of using a text editor we can use `sed` command 
+
+```
+sudo sed -i '51s/.*/\t        proxy_pass http:\/\/localhost:3000;/' /etc/nginx/sites-available/default
+
+```
+then we can restart nginx for changes to take effect
+
+```
+sudo systemctl restart nginx
+```
 
 
 # complete script for nginx and nodejs app
@@ -110,7 +158,7 @@ echo done
 echo running app
 
 ### set DB_HOST env variable:
-export DB_HOST=mongodb://172.31.94.168:27017/posts
+export DB_HOST=mongodb://PRIVATEIP:27017/posts
 
 sudo -E npm install
 #node app.js &
@@ -120,5 +168,37 @@ sudo -E pm2 start app.js
 sudo -E pm2 restart app.js
 
 echo Done!
+
+echo configuring reverse proxy
+#create backup
+
+sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default.bak
+
+#configure file
+
+sudo sed -i '51s/.*/\t        proxy_pass http:\/\/localhost:3000;/' /etc/nginx/sites-available/default
+
+echo configured!
+echo restarting nginx....
+
+#restart nginx 
+
+sudo systemctl restart nginx
+
+echo  Done!
+
+
+
+
 ```
 
+## Blockers
+
+If nginx isnt working remove it and restart 
+
+```
+sudo systemctl stop nginx
+
+sudo apt purge nginx nginx-common
+
+sudo apt update
