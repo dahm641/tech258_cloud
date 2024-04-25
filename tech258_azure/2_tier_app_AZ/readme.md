@@ -1,6 +1,14 @@
 # 2 tier app deployment in azure
 
-1. Create virtual networks <br><br>
+- [2 tier app deployment in azure](#2-tier-app-deployment-in-azure)
+    - [1. Create virtual networks ](#1-create-virtual-networks-)
+  - [2. Virtual Machine set up ](#2-virtual-machine-set-up-)
+  - [3. Database VM ](#3-database-vm-)
+  - [4. SSH into Vms ](#4-ssh-into-vms-)
+  - [5. Check](#5-check)
+
+
+### 1. Create virtual networks <br><br>
    1. Go to virtual networks and then ***"Create"*** on the left <br><br>
 
       ![img_12.png](images/img_12.png) <br><br>
@@ -30,8 +38,8 @@
 
     5. click ***"Review + create"***  and then ***"Create"*** <br><br>
 
-   2. Virtual Machine set up <br><br>
-      1. App VM <br><br>
+## 2. Virtual Machine set up <br><br>
+   1. App VM <br><br>
 
          go to virtual machines <br><br>
          ![img.png](images/img.png) <br><br>
@@ -40,7 +48,7 @@
     
          Our chosen parameters were given to us so follow if you want to use those (pictures) or choose your own. <br><br>
    
-      2. Basics <br><br>
+   2. Basics <br><br>
 
          sub + resource group and availability <br><br>
          ![img_2.png](images/img_2.png) <br><br>
@@ -51,15 +59,15 @@
          choose basic inbound ports (optional -can edit and create security group later) <br><br>
          ![img_5.png](images/img_5.png) <br><br>
          once done click next:Disks <br><br>
-      3. Disks <br><br>
+   3. Disks <br><br>
          choose disk size and click next: networking <br><br>
       ![img_6.png](images/img_6.png) <br><br>
-      4. Networking <br><br>
-         1. Choose your virtual network you created earlier and your **<ins> public subnet for the app and private subnet for the database**. In this instance you can allow it to create a new public ip. <br><br>
-         2. Choose advanced for ***"NIC network security group"*** <br><br>
+   4. Networking <br><br>
+      1. Choose your virtual network you created earlier and your **<ins> public subnet for the app and private subnet for the database**. In this instance you can allow it to create a new public ip. <br><br>
+      2. Choose advanced for ***"NIC network security group"*** <br><br>
 
           ![img_13.png](images/img_13.png) <br><br>
-         3. under ***"Configure network security group"*** click ***"Create new"*** <br><br>
+      3. under ***"Configure network security group"*** click ***"Create new"*** <br><br>
 
             Add appropriate name and inbound rules <br><br>
 
@@ -75,17 +83,19 @@
 
        5. Click ***"Review + create"*** and add the same tags as the virtual network. Then click ***"Create"*** <br><br> 
 
-   3. Database VM <br><br>
+## 3. Database VM <br><br>
 
 Follow the same steps except this time we only need port 22 open for ssh (see ***basics*** above) so dont need to create a nsg. One will be created for you. :warning: Remember to use the private IP for database vm in the script for the app VM! <br><br>
 
-4. SSH into Vms <br><br>
+## 4. SSH into Vms <br><br>
 
-Once made we want to ssh into our VMs and run our scripts we made before. LINK TO DB SCRIPT LINK TO APP SCRIPT <br><br>
+Once made we want to ssh into our VMs and run our scripts we made before. [DB SCRIPT](https://github.com/dahm641/tech258_cloud/blob/main/linux/app/db_script.sh) [APP SCRIPT](https://github.com/dahm641/tech258_cloud/blob/main/linux/app/app_script.sh) <br><br>
 :warning: Run db script first on db vm then app script on app vm <br><br>
 
 We can SSH by finding our vm and clicking connect <br><br>
 ![img_16.png](images/img_16.png) <br><br>
 then click into ***"Native SSH"*** <br><br> 
 
-5. Check all is running by using public IP of app vm and adding /posts to the end of it
+## 5. Check
+
+Check all is running by using public IP of app vm and adding /posts to the end of it
