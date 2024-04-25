@@ -6,6 +6,8 @@
   - [3. Database VM ](#3-database-vm-)
   - [4. SSH into Vms ](#4-ssh-into-vms-)
   - [5. Check](#5-check)
+  - [6. Difference between Azure and AWS](#6-difference-between-azure-and-aws)
+    - [Some things I noticed were](#some-things-i-noticed-were)
 
 
 ### 1. Create virtual networks <br><br>
@@ -30,12 +32,10 @@
 
         ![img_10.png](images/img_10.png) <br><br>
 
-        Press add <br><br>
-
+        Press add<br><br>
     4. Add your tags  <br><br>
 
         ![img_11.png](images/img_11.png) <br><br>
-
     5. click ***"Review + create"***  and then ***"Create"*** <br><br>
 
 ## 2. Virtual Machine set up <br><br>
@@ -99,3 +99,11 @@ then click into ***"Native SSH"*** <br><br>
 ## 5. Check
 
 Check all is running by using public IP of app vm and adding /posts to the end of it
+
+## 6. Difference between Azure and AWS
+
+### Some things I noticed were
+- We need resource groups and subscriptions for every resource we create
+- The IP address is a resource and can be reused - even if the vm is terminated 
+- For this case, we had to create our own virtual network and subnets
+- Many more options that we need to fill out compared to AWS which abstracts some of this away from us. Could be seen as a positive or a negative.
