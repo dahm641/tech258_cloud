@@ -140,6 +140,17 @@ echo installing nginx...
 sudo DEBIAN_FRONTEND=noninteractive apt install nginx -y
 echo done!
 
+echo configuring reverse proxy
+#create backup
+
+sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default.bak
+
+#configure file
+
+sudo sed -i '51s/.*/\t        proxy_pass http:\/\/localhost:3000;/' /etc/nginx/sites-available/default
+
+echo configured!
+
 
 # restart nginx
 echo restarting nginx...
@@ -158,7 +169,7 @@ echo installing git
 sudo apt install git -y
 echo done
 
-git clone https://github.com/dahm641/tech258_sparta_test_app
+git clone https://github.com/dahm641/tech258_sparta_test_app 
 echo  cloned repo
 
 # cd app folder
@@ -180,7 +191,7 @@ echo done
 echo running app
 
 ### set DB_HOST env variable:
-export DB_HOST=mongodb://PRIVATEIP:27017/posts
+export DB_HOST=mongodb://10.0.3.4:27017/posts
 
 sudo -E npm install
 #node app.js &
@@ -190,26 +201,6 @@ sudo -E pm2 start app.js
 sudo -E pm2 restart app.js
 
 echo Done!
-
-echo configuring reverse proxy
-#create backup
-
-sudo cp /etc/nginx/sites-enabled/default /etc/nginx/sites-available/default.bak
-
-#configure file
-
-sudo sed -i '51s/.*/\t        proxy_pass http:\/\/localhost:3000;/' /etc/nginx/sites-available/default
-
-echo configured!
-echo restarting nginx....
-
-#restart nginx 
-
-sudo systemctl restart nginx
-
-echo  Done!
-
-
 
 
 ```
