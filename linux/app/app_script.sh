@@ -1,5 +1,4 @@
 ```
-# Nginx script
 #!/bin/bash
 
 # update
@@ -51,12 +50,14 @@ echo installing git
 sudo apt install git -y
 echo done
 
+cd /
+
 git clone https://github.com/dahm641/tech258_sparta_test_app
 echo  cloned repo
 
 # cd app folder
 
-cd ~/tech258_sparta_test_app/app
+cd /tech258_sparta_test_app/app
 
 # run app
 echo installing node js
@@ -73,7 +74,7 @@ echo done
 echo running app
 
 ### set DB_HOST env variable:
-export DB_HOST=mongodb://10.0.3.4:27017/posts
+export DB_HOST=mongodb://10.0.3.7:27017/posts
 
 sudo -E npm install
 #node app.js &

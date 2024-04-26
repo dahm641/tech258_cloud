@@ -169,6 +169,8 @@ echo installing git
 sudo apt install git -y
 echo done
 
+cd
+
 git clone https://github.com/dahm641/tech258_sparta_test_app 
 echo  cloned repo
 
