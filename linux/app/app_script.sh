@@ -74,8 +74,8 @@ echo done
 echo running app
 
 ### set DB_HOST env variable:
-export DB_HOST=mongodb://10.0.3.7:27017/posts
-
+export DB_HOST=mongodb://10.0.3.5:27017/posts
+cd /tech258_sparta_test_app/app
 sudo -E npm install
 #node app.js &
 sudo -E npm install -g pm2

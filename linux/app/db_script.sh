@@ -50,4 +50,5 @@ sudo sed -i 's/^\(\s*\)bindIp: .*/\1bindIp: 0.0.0.0/' /etc/mongod.conf
 
 #Restart mongodb
 sudo systemctl restart mongod
+sudo systemctl enable mongod
 ```

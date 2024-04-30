@@ -12,9 +12,11 @@
   - [9. Machine images](#9-machine-images)
       - [What is an Image](#what-is-an-image)
       - [What is not inlcuded](#what-is-not-inlcuded)
-    - [How to set up custom image](#how-to-set-up-custom-image)
-        - [DB](#db)
-        - [App](#app)
+    - [How to set up custom image from a vm](#how-to-set-up-custom-image-from-a-vm)
+        - [How I did it for the DB](#how-i-did-it-for-the-db)
+        - [How I launched the app](#how-i-launched-the-app)
+        - [Things to note](#things-to-note)
+        - [Generalizing the VM](#generalizing-the-vm)
     - [Side effects of making a machine image on azure](#side-effects-of-making-a-machine-image-on-azure)
     - [User data needed when image is used](#user-data-needed-when-image-is-used)
 
@@ -143,80 +145,95 @@ Check all is running by using public IP of app vm and adding /posts to the end o
 
 #### What is an Image
 
-Machine images are, simply put, a snapshot of the disk / replica of the disk. By this we mean that the image, for example Ubuntu, and all of its files to run are stored in the image. We chose this before so the operating system was instantly avaiable to us. When we add our script and install new files, we dont want to do this everytime. We can save the newly installed files and configurations (like nginx) which would be saved on the disk attached to the vm with the operating system on it.
-
- We can replicate this / take a snapshot of it so if we were to deploy it again all the installed fles would be there for us already as we can just attach this disk straight to the machine. We wouldnt have to install these files and packages again. <br> This can save us lots of time and we can run a much shorter script if we want to provision again. We wouldnt need to install nginx or even download our app. All we would need to do is run our app and set our HOST_DB environment variable.
+- Machine images are, simply put, a snapshot of the disk / replica of the disk. 
+- By this we mean that the image, for example Ubuntu, and all of its files to run are stored in the image. We chose this before so the operating system was instantly avaiable to us.
+- When we add our script and install new files, we dont want to do this everytime. We can save the newly installed files and configurations (like nginx) which would be saved on the disk attached to the vm with the operating system on it.
+- We can replicate this / take a snapshot of it so if we were to deploy it again all the installed fles would be there for us already as we can just attach this disk straight to the machine.
+- We wouldnt have to install these files and packages again. <br> 
+- This can save us lots of time and we can run a much shorter script if we want to provision again. We wouldnt need to install nginx or even download our app. All we would need to do is run our app and set our HOST_DB environment variable.
 
  We can see from this diagram how we have sped up a manual process through automation in stages: <br><br>
- ![alt text](images/image-4.png)
+ ![alt text](image-1.png)
 
- Having to no longer write our script out manually and using a script speeds up deployment. No longer having to SSH in improves deployments speed and by reducing our script using custom images that have our configurations installed (not securtiy groups or SSH keys) on our operating system already, it enables our app or db to be up and running at a much quicker rate than before.
+ 1. Having to no longer write our script out manually and ssh in took very long and wouldnt be good for multiple deployments
+ 2. We sped this up by eliminating the need to manually write out our script by using all the commands we used and removing the need for any user input
+ 3. We then went further and removed the need to ssh into our VMs by using the *user data* field in Azure (also available in aws)
+ 4. To speed up not only the deployment, but the speed at which the app or database is available after the VM is provisioned and started, we used machine images with a small amount of user data.
+ 5. The image has all of our services and configurations installed and maybe even running on start up if they are system processes (such as mongod) so machine images remove the time that it takes to install these services that we need.
+ 6. We had to use a small amount of user data for the app to set some variables that change and to restart our services using this variable using a process manager pm2
 
  On azure the image is called a mchine image and on aws it is called an amazon machine image, or, AMI for short.
 
  #### What is not inlcuded
 
- As mentioned before, security groups, SSH keys and all other aspects to do with how to VM interacts with the network are not included. It doesnt run non system processes like our app we still hae to start these. Anyything that is a system process will be running however. 
+ - As mentioned before, security groups, SSH keys and all other aspects to do with how to VM interacts with the network are not included. 
+
+ - It doesnt run non system processes like our app we still hae to start these. Anyything that is a system process will be running however. 
  
- It only includes files, OS and OS settings and anything that runs specifically on the disk the OS runs on (the disk attached to the vm). like pre-installed software, configuration settings, and possibly data that is bundled together to create a reusable template for deploying virtual machines.
+ - It only includes files, OS and OS settings and anything that runs specifically on the disk the OS runs on (the disk attached to the vm). like pre-installed software, configuration settings, and possibly data that is bundled together to create a reusable template for deploying virtual machines.
 
- Here is a complete breakdown:
+ - Any dynamic data or changes made to the system after the image was created will not be included.
 
-1. **Dynamic Data**: Machine images usually contain static configurations and software installations. Any dynamic data or changes made to the system after the image was created will not be included.
+ - Information specific to users, such as user accounts, passwords, and personal files.
 
-2. **User Data**: Information specific to users, such as user accounts, passwords, and personal files, are typically not included in machine images.
+ - Temporary files and caches that are not part of the base configuration.
+  
+ - Specific network settings, such as IP addresses, DNS configuration, and firewall rules, are usually not included in machine images as they can vary depending on the deployment environment.
 
-3. **Temporary Files**: Temporary files and caches that are not part of the base configuration are generally excluded.
+ - Sensitive security credentials such as SSH keys, SSL certificates, or authentication tokens.
 
-4. **Customizations**: Any customizations made to the system post-deployment, such as software updates, additional software installations, or specific configurations tailored to a particular use case, will not be included in the machine image unless explicitly saved as part of the image creation process.
-
-5. **Networking Configuration**: Specific network settings, such as IP addresses, DNS configuration, and firewall rules, are usually not included in machine images as they can vary depending on the deployment environment.
-
-6. **Security Credentials**: Machine images typically do not include sensitive security credentials such as SSH keys, SSL certificates, or authentication tokens.
-
-7. **External Dependencies**: External dependencies or services that the system relies on but are not included in the image itself, such as database servers, external APIs, or cloud services, are not part of the machine image.
+ - External dependencies or services that the system relies on but are not included in the image itself, such as database servers or cloud services are not part of the machine image.
 
 
-### How to set up custom image
+### How to set up custom image from a vm
 
-Go to vm and overview tab and click capture
+1. ssh into the vm and run the command `sudo waagent -deprovision+user` to generalise it 
+   
+2. Go to vm and overview tab and click capture
 
 ![alt text](images/image1-1.png)
 
-Then when it says ***"Share image to Azure compute gallery"*** select ***"No"***
+3. Then when it says ***"Share image to Azure compute gallery"*** select ***"No"***
 
 ![alt text](images/image1-2.png)
 
-Once done then we can relaunch using our image
+4. Once done then we can relaunch using our image
+5. Did this for both our database and app once we tested that it was all functioning correctly
 
-##### DB
+##### How I did it for the DB
 
-
-Choose db image from earlier
+1. Create an image using steps earlier 
+   
+![alt text](image.png)
+   
+2. Create a vm and choose db image from step one. Or go to image created and create vm from there.
 
 
 ![alt text](images/image1-3.png)
 
-Dont add any user data and set up configurations such as network and ssh and tags.  :warning: If you are asked to choose licencing type then choose other (basics tab)
+3. Dont add any user data and set up configurations such as network and ssh and tags.  :warning: If you are asked to choose licencing type then choose other (basics tab)
 
 ![alt text](images/image1-4.png)
 
-Use this in the user data to start mongo db service
+4. Click create. Note that we dont need userdata because we "enabled" the mongod service in our script so that it launches on startup and is active by default in the background.
 
-```
-sudo systemctl start mongod
-```
 
-##### App
+##### How I launched the app
 
-Same as db so choose your app image from earlier
+1. First I launched the DB. then copied its private IP address and pasted it into our environment variable `DB_HOST`
+   
+2. The rest is similar to our database so ssh int your vm and genarlise it:
+
+![alt text](<Screenshot 2024-04-30 110807.png>)
+
+3. Then choose the image you made earlier
 
 ![alt text](images/image-5.png)
 
-Then same as before set up normal configurations
+4. Then same as before set up configurations (networking, ssh, size, memory, tags etc)
 
 
-Then we need to add user data before creating and we only need the following
+5. Then we need to add user data before creating and we only need the following
 
 ```
 #!bin/bash
@@ -228,13 +245,36 @@ sudo pm2 stop all
 sudo -E pm2 start app.js
 sudo -E pm2 restart app.js
 ```
+- we have to use the shebang to state its a script
+- remake our env variable as its changed (private ip of the database)
+- move to our app directory
+- install npm again to use the new environment variable
+- use pm2 to start the app
+- we can comment out `DB_HOST` if we dont need the /posts page to work. This will mean the app wont connect to the database as we have not specified where it is located.
 
-we can comment out `DB_HOST` if we dont need the /posts page to work. This will mean the app wont connect to the database as we have not specified where it is located.
+##### Things to note
 
+- We cloned the git repo (the app) into our root folder
+- We did this because when we make an image we generalisee it. What this means is that we remove the users and user data so that it can be used by anyone and not one user specificaly. This is what stops it working on a VM when we create it
+- To get it ready for an image we must use the command `sudo waagent -deprovision+user `
+- Because we do that, the app is running in the root user/directory and has root permissions
+- To change this we canchange the permissions of the app (recursively) by using `chmod`
+- change the owner of the files by using `chown`
+- Use `sudo` to accesss what we need and using `-E` to use the environment variables
+- Temporarily log in as the root user to do what we need with the app folder
+
+
+##### Generalizing the VM
+
+- Generalization aims to remove all specific configurations and information unique to that particular VM instance, making it stateless and generic. Deallocating the VM ensures that no changes occur during the generalization process, maintaining the integrity of the resulting image.
+- Typically used for scenarios where the same image needs to be deployed across multiple instances or environments.
+- This makes it good to use as a template. 
+- We can use speciliasation if we want to keep specific configuration files (keep user data)
+- Specialized Images: In contrast, specialized images are tailored for specific use cases or environments. They may contain pre-configured settings, software installations, and customizations that are specific to a particular application or workload. Specialized images are often used when you need to deploy instances with specific configurations that are not suitable for general distribution.
 
 ### Side effects of making a machine image on azure
 
-Using the above method it deallocates the vm machine. The disk gets removed from the VM so its no longer running. The disk is used to create the image.
+Using the above method it deallocates the vm machine. This dissassociates the VM from its resources and it can no longer be used. Its also generalised so the whole user directory and files get removed.
 
 ![alt text](images/image-6.png)
 
