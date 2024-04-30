@@ -57,5 +57,5 @@
 6. Add extra details on the next tab such as the name and severity <br> ![alt text](image-11.png)
 7. Add tags and click create
 8. Now go back and ssh into the vm and run the command from earlier: `ab -n 2000 -c 300 http://yourwebsite.com/`
-9. You should get an email alert like this <br> ![alt text](image-12.png) (the alert i got here was from one I set up with a lower percentage)
+9. You should get an email alert like this <br> ![alt text](image-12.png) <br> (the alert i got here was from one I set up with a lower percentage)
     
