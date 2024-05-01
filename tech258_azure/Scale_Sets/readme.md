@@ -1,5 +1,19 @@
 # Scale sets
 
+- [Scale sets](#scale-sets)
+  - [What are scale sets?](#what-are-scale-sets)
+  - [How to make a scale set](#how-to-make-a-scale-set)
+    - [Prerequisites](#prerequisites)
+  - [Managing instances](#managing-instances)
+    - [Upgrading](#upgrading)
+    - [Re-imaging](#re-imaging)
+  - [SSH into instances](#ssh-into-instances)
+  - [Deleting](#deleting)
+
+
+
+## What are scale sets?
+
 - Scale sets are a way to automatically provision more VMs based on metrics we set
 - They can scale both out and in depending on conditions
 - They provide high availability because they make sure that we always have instances running and that they won't be overloaded and shut off, so they are always available. Highly available.
@@ -16,7 +30,7 @@
 
 ## How to make a scale set
 
-### Prerequisite 
+### Prerequisites 
 
 - Image with user data needs to be confirmed working with confidence.
 - Launched a regular VM with script to ensure this.
