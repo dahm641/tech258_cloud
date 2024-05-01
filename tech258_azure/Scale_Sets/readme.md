@@ -40,7 +40,7 @@
    - We want to choose all three because we want high availability. In case one zone goes down we don't lose all our machines in that zone. <br> <br>
        
    ![img_1.png](images/img_1.png) <br><br>
-3. Choose ***"Autoscaling"*** and click configure
+3. Choose ***"Autoscaling"*** and click configure <br><br>
 ![img_2.png](images/img_2.png)  <br><br>
 4. Edit default condition <br><br>
 ![img_3.png](images/img_3.png) <br><br>
@@ -120,6 +120,7 @@
 ## Deleting
 
 - To delete our resources, we can either go to our resource list and search for tags and force delete all the associated resources. <br><br>
+- ![img.png](images/img_19.png) <br><br>
 - Or we can delete our scale set then delete our load balancer then delete its public IP. <br><br>
 - We have to do it in this order because the load balancer is in use by the scale set and the public ip of the load balancer is being used by the load balancer, so we must delete  dependencies first 
 
