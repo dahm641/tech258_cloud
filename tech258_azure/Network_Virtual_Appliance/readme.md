@@ -59,9 +59,8 @@ Should end up with this (make sure virtual network address space as shown): <br>
 3. Private subnet and open port 22 for ssh
 4. Dont create a public IP  <br><br>
 ![img_7.png](images/img_7.png)  <br><br>
-
 ![img_8.png](images/img_8.png)  <br><br>
-1. Add tags and create
+5. Add tags and create
 
 ### App VM
 
@@ -90,7 +89,7 @@ Should end up with this (make sure virtual network address space as shown): <br>
 
 1. Set up a regular VM with Ubuntu 22.04
 2. Allow SSH
-3. Put it in availability zone 2. Each one in their own incase one zone fails.
+3. Put it in availability zone 2. Each VM in their own zone incase one zone fails. We can spin up the part of our app that has failed.
 4. Place it in the ***dmz-subnet*** we created with our virtual network
 5. Add tags, check details and create  <br><br>
 ![img_14.png](images/img_14.png)  <br><br>
@@ -189,12 +188,12 @@ We do this so that the app wil be able to first be routed to our NVA then our NV
    - We set this up by saying our next hop (where it should go to first) is the NVM private IP (highlighted in green)
    - We say our destination or where it should end up is our private subnet, so we state this also (blue) <br><br>
      ![img_22.png](images/img_22.png) <br><br>
-4. We then associate it with our public subnet so traffic going from there knows which route to take <br><br>
-5. Go to subnets and click associate ![img_23.png](images/img_23.png) <br><br>
+4. We then associate it with our public subnet so traffic going from there knows which route to take <br><br><br> 
+5. Go to subnets and click associate <br><br> ![img_23.png](images/img_23.png) <br><br>
 6. Choose your public subnet and associate the route table to it.
 7. test it works by using your public ip for the app and adding /posts to it <br><br> 
 ![img_24.png](images/img_24.png) <br><br>
-8. Done!
+1. Done!
 
 ### Securing Further
 
