@@ -16,8 +16,13 @@
 
 ![img_2.png](images/img_2.png)
 
-## How does it help?
-Having an NVA is like having an additional dedicated layer of security. Think of it as a firewall. It lives in its own subnet and filters out any requests. This means that it can choose what can even get access and to where. 
+## What is it and how does it help?
+
+A network virtual appliance is a VM that checks incoming and outgoing traffic.
+
+It is placed in something called a DMZ a demilitarized zone. This is a dedicated network space that can act as a barrier between the outside and your local network. It adds an additional layer of security to your network because its a place where requests will go to first before going to your internal network.
+
+Having an NVA is like having an additional dedicated layer of security. Think of it as a firewall. It lives in its own DMZ subnet and filters out any requests. This means that it can choose what can get access and to where. 
 - It has its own rules and helps to divert internal traffic
 - It is like having a gate before your house. You don't want all the traffic handled at your front door you don't even want people at your front for. This acts as a gate before anyone can even get access to your front door.
 - This increases the security because now it's harder for any traffic to get to our DB subnet because any requests get filtered by our NVA and only the right requests will make it through before being checked again by the NSG of the db or its subnet
@@ -34,7 +39,7 @@ Having an NVA is like having an additional dedicated layer of security. Think of
 
 ![img_27.png](images/img_27.png)
 
-We will do it using the diagram with the steps labelled above
+We will set it up using the diagram with the steps labelled above
 
 ### Virtual network
 
