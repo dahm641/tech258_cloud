@@ -52,7 +52,7 @@ echo done
 
 cd /
 
-git clone https://github.com/dahm641/tech258_sparta_test_app
+sudo git clone https://github.com/dahm641/tech258_sparta_test_app
 echo  cloned repo
 
 # cd app folder
@@ -74,7 +74,7 @@ echo done
 echo running app
 
 ### set DB_HOST env variable:
-export DB_HOST=mongodb://10.0.3.5:27017/posts
+export DB_HOST=mongodb://10.0.3.4:27017/posts
 cd /tech258_sparta_test_app/app
 sudo -E npm install
 #node app.js &

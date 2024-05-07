@@ -17,7 +17,7 @@
 - Scale sets are a way to automatically provision more VMs based on metrics we set
 - They can scale both out and in depending on conditions
 - They provide high availability because they make sure that we always have instances running and that they won't be overloaded and shut off, so they are always available. Highly available.
-- We need them because they allow us to have high availability and high scalability AUTOMATICALLY
+- We need them because they allow us to have high availability and high scalability AUTOMATICALLY, reacting dynamically to changes without the need for any human intervention/input.
 
     ![img.png](images/img.png)
 

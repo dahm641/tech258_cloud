@@ -117,7 +117,7 @@ We do this so that the app wil be able to first be routed to our NVA then our NV
     7. It should now say that it =1 meaning its enabled  <br><br> ![img_19.png](images/img_19.png)  <br><br>
     8. Now we have to create our IP table rules. This only allows certain packets to be sent so adds to our security.
        1. We can create a script using `nano script.sh` and then using this script:
-       2. *We need to update before running the script generally, but I have added it to the script to save time.*
+       2. *Generally, we need to update the packages on our instance before running the script, but I have added it to the script to save time.*
        ```
        #!/bin/bash
        # update and upgrade packages
@@ -127,57 +127,48 @@ We do this so that the app wil be able to first be routed to our NVA then our NV
      
        echo "Configuring iptables..."
      
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A INPUT -i lo -j ACCEPT
-       sudo iptables -A OUTPUT -o lo -j ACCEPT
+       # Allows all traffic on the loopback interface (localhost)
+        sudo iptables -A INPUT -i lo -j ACCEPT
+        sudo iptables -A OUTPUT -o lo -j ACCEPT
+        
+        # Allows incoming packets that are part of established or related connections
+        sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+        
+        # Allows outgoing packets that are part of established connections
+        sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT
+        
+        # Drops incoming packets that are marked as invalid
+        sudo iptables -A INPUT -m state --state INVALID -j DROP
+        
+        # Allows incoming SSH connections on port 22
+        sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+        sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+        
+        # Allows forwarding of TCP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 on port 27017 (example for MongoDB)
+        sudo iptables -A FORWARD -p tcp -s 10.0.2.0/24 -d 10.0.4.0/24 --destination-port 27017 -m tcp -j ACCEPT
+        
+        # Allows forwarding of ICMP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 (example for ping)
+        sudo iptables -A FORWARD -p icmp -s 10.0.2.0/24 -d 10.0.4.0/24 -m state --state NEW,ESTABLISHED -j ACCEPT
+        
+        # Sets default policy for incoming packets to DROP (rejects all incoming packets by default)
+        sudo iptables -P INPUT DROP
+        
+        # Sets default policy for forwarded packets to DROP (rejects all forwarded packets by default)
+        sudo iptables -P FORWARD DROP
+
      
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A INPUT -m state --state INVALID -j DROP
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-       sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-     
-       # uncomment the following lines if want allow SSH into NVA only through the public subnet (app VM as a jumpbox)
-       # this must be done once the NVA's public IP address is removed
-       #sudo iptables -A INPUT -p tcp -s 10.0.2.0/24 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-       #sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-     
-       # uncomment the following lines if want allow SSH to other servers using the NVA as a jumpbox
-       # if need to make outgoing SSH connections with other servers from NVA
-       #sudo iptables -A OUTPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-       #sudo iptables -A INPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A FORWARD -p tcp -s 10.0.2.0/24 -d 10.0.4.0/24 --destination-port 27017 -m tcp -j ACCEPT
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -A FORWARD -p icmp -s 10.0.2.0/24 -d 10.0.4.0/24 -m state --state NEW,ESTABLISHED -j ACCEPT
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -P INPUT DROP
-     
-       # ADD COMMENT ABOUT WHAT THE FOLLOWING COMMAND(S) DO
-       sudo iptables -P FORWARD DROP
-     
-       echo "Done!"
-       echo ""
-     
-       # make iptables rules persistent
-       # it will ask for user input by default
-     
-       echo "Make iptables rules persistent..."
-       sudo DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -y
-       echo "Done!"
-       echo ""
-       ```
-       3. Save it and run it using `bash script.sh`
+        echo "Done!"
+        echo ""
+         
+        # make iptables rules persistent
+        # it will ask for user input by default
+         
+        echo "Make iptables rules persistent..."
+        sudo DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -y
+        echo "Done!"
+        echo ""
+        ```
+        3. Save it and run it using `bash script.sh`
 4. Now we need to create a route table to actually send traffic to this NVA
 
 
