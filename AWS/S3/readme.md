@@ -114,7 +114,7 @@ Research the documentation on AWS/Python for Python boto3 package to create and 
 
 #### :warning: Ensure aws has been configured in your CLI
 
-#### Broken into input or no input scripts
+#### Scripts use input. Can change in the script to make it no input.
 
 ##### To list all buckets create the following script
 ```python
@@ -130,38 +130,51 @@ for bucket in s3.buckets.all():
 ###### Input
 
 ```python
-
 import boto3
 
-def create_bucket(bucket_name):
-    # Create an S3 client
-    s3 = boto3.client('s3')
+def create_bucket(bucket_name, region):
+    # Create an S3 client with specified region
+    s3 = boto3.client('s3', region_name=region)
     
     # Create bucket
     s3.create_bucket(Bucket=bucket_name)
-    print(f"Bucket '{bucket_name}' created successfully.")
+    print(f"Bucket '{bucket_name}' created successfully in region '{region}'.")
 
 # Prompt the user to input the bucket name
 bucket_name = input("Enter the name of the bucket: ")
 
+# Specify the region
+region = 'eu-west-1'
+
 # Call the function to create the bucket
-create_bucket(bucket_name)
+create_bucket(bucket_name, region)
+
 ```
 
-###### No input
+[//]: # (###### No input)
 
-```python
-import boto3
+[//]: # ()
+[//]: # (```python)
 
-# Choose resource to work on
-s3 = boto3.client('s3')
-# Bucket name
-bucket_name = 'tech255-dan-2nd-bcket'
+[//]: # (import boto3)
 
-# Create bucket
-s3.create_bucket(Bucket=bucket_name)
-print(f"Bucket '{bucket_name}' created successfully.")
-```
+[//]: # ()
+[//]: # (# Choose resource to work on)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # (# Bucket name)
+
+[//]: # (bucket_name = 'tech255-dan-2nd-bcket')
+
+[//]: # ()
+[//]: # (# Create bucket)
+
+[//]: # (s3.create_bucket&#40;Bucket=bucket_name&#41;)
+
+[//]: # (print&#40;f"Bucket '{bucket_name}' created successfully."&#41;)
+
+[//]: # (```)
 ##### Upload data/files to bucket
 ```python
 import boto3
@@ -169,9 +182,16 @@ import boto3
 # Create an S3 client
 s3 = boto3.client('s3')
 
-# Upload file
-s3.upload_file('/path/to/your/file.txt', 'tech258-dan-2nd-bcket', 'file.txt')
-print("File uploaded successfully.")
+# Prompt the user to input the file name
+file_name = input("Enter the name of the file: ")
+
+# Prompt the user to input the bucket name
+bucket_name = input("Enter the name of the bucket: ")
+
+# Upload file from the current directory (assuming the file is in the current directory)
+s3.upload_file(file_name, bucket_name, file_name)
+print(f"File '{file_name}' uploaded successfully to bucket '{bucket_name}'.")
+
 
 ```
 ##### Upload all files in a folder
@@ -179,7 +199,6 @@ print("File uploaded successfully.")
 ```python
 
 import boto3
-import os
 
 def upload_files_to_s3(s3, local_path, bucket_name, s3_folder_path):
     # Iterate through files in the local folder
@@ -209,29 +228,47 @@ s3_folder_path = input("Enter the folder path in the bucket to upload the files 
 # Call the function to upload files to the S3 bucket
 upload_files_to_s3(s3, local_folder_path, bucket_name, s3_folder_path)
 ```
-###### No input
-```python
-import boto3
-import os
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # (###### No input)
 
-# Folder containing files to upload
-folder_path = '.'
-# can replace . with '/path/to/your/folder'
+[//]: # (```python)
 
-# Bucket name
-bucket_name = 'name of bucket'
+[//]: # (import boto3)
 
-# Iterate through files in the folder
-for file_name in os.listdir(folder_path):
-    file_path = os.path.join(folder_path, file_name)
-    # Upload each file to S3 bucket
-    s3.upload_file(file_path, bucket_name, file_name)
-    print(f"File '{file_name}' uploaded successfully.")
+[//]: # (import os)
 
-```
+[//]: # ()
+[//]: # (# Create an S3 client)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # ()
+[//]: # (# Folder containing files to upload)
+
+[//]: # (folder_path = '.')
+
+[//]: # (# can replace . with '/path/to/your/folder')
+
+[//]: # ()
+[//]: # (# Bucket name)
+
+[//]: # (bucket_name = 'name of bucket')
+
+[//]: # ()
+[//]: # (# Iterate through files in the folder)
+
+[//]: # (for file_name in os.listdir&#40;folder_path&#41;:)
+
+[//]: # (    file_path = os.path.join&#40;folder_path, file_name&#41;)
+
+[//]: # (    # Upload each file to S3 bucket)
+
+[//]: # (    s3.upload_file&#40;file_path, bucket_name, file_name&#41;)
+
+[//]: # (    print&#40;f"File '{file_name}' uploaded successfully."&#41;)
+
+[//]: # ()
+[//]: # (```)
 
 ##### Download files
 
@@ -261,24 +298,36 @@ download_single_file(s3, bucket_name, file_name, local_path)
 
 ```
 
-###### No input 
-```python
-import boto3
+[//]: # (###### No input )
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # (```python)
 
-# Bucket name
-bucket_name = 'tech257-ramon-test-boto3'
+[//]: # (import boto3)
 
-# File to download
-file_path = '/path/to/save/downloaded/file.txt'
+[//]: # ()
+[//]: # (# Create an S3 client)
 
-# Download file
-s3.download_file(bucket_name, 'file.txt', file_path)
-print("File downloaded successfully.")
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
 
-```
+[//]: # ()
+[//]: # (# Bucket name)
+
+[//]: # (bucket_name = 'tech257-ramon-test-boto3')
+
+[//]: # ()
+[//]: # (# File to download)
+
+[//]: # (file_path = '/path/to/save/downloaded/file.txt')
+
+[//]: # ()
+[//]: # (# Download file)
+
+[//]: # (s3.download_file&#40;bucket_name, 'file.txt', file_path&#41;)
+
+[//]: # (print&#40;"File downloaded successfully."&#41;)
+
+[//]: # ()
+[//]: # (```)
 
 ##### download all files
 
@@ -314,43 +363,70 @@ local_directory = input("Enter the local directory to download files to: ")
 download_files_from_s3(s3, bucket_name, local_directory)
 
 ```
-###### No input
-```python
-import boto3
-import os
 
-def download_files_from_s3(s3, bucket_name, local_directory):
-    # Create the local directory if it doesn't exist
-    os.makedirs(local_directory, exist_ok=True)
+[//]: # (###### No input)
 
-    # List all objects in the bucket
-    response = s3.list_objects_v2(Bucket=bucket_name)
+[//]: # (```python)
 
-    # Iterate through objects and download each one
-    for obj in response.get('Contents', []):
-        # Get the object key
-        object_key = obj['Key']
+[//]: # (import boto3)
 
-        # Construct the local file path
-        local_file_path = os.path.join(local_directory, object_key)
+[//]: # (import os)
 
-        # Download the object
-        s3.download_file(bucket_name, object_key, local_file_path)
-        print(f"File '{object_key}' downloaded successfully.")
+[//]: # ()
+[//]: # (def download_files_from_s3&#40;s3, bucket_name, local_directory&#41;:)
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # (    # Create the local directory if it doesn't exist)
 
-# Bucket name
-bucket_name = 'tech257-ramon-test-boto3'
+[//]: # (    os.makedirs&#40;local_directory, exist_ok=True&#41;)
 
-# Local directory to download files to
-local_directory = '/path/to/save/downloaded/files'
+[//]: # ()
+[//]: # (    # List all objects in the bucket)
 
-# Call the function to download files from S3 bucket
-download_files_from_s3(s3, bucket_name, local_directory)
+[//]: # (    response = s3.list_objects_v2&#40;Bucket=bucket_name&#41;)
 
-```
+[//]: # ()
+[//]: # (    # Iterate through objects and download each one)
+
+[//]: # (    for obj in response.get&#40;'Contents', []&#41;:)
+
+[//]: # (        # Get the object key)
+
+[//]: # (        object_key = obj['Key'])
+
+[//]: # ()
+[//]: # (        # Construct the local file path)
+
+[//]: # (        local_file_path = os.path.join&#40;local_directory, object_key&#41;)
+
+[//]: # ()
+[//]: # (        # Download the object)
+
+[//]: # (        s3.download_file&#40;bucket_name, object_key, local_file_path&#41;)
+
+[//]: # (        print&#40;f"File '{object_key}' downloaded successfully."&#41;)
+
+[//]: # ()
+[//]: # (# Create an S3 client)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # ()
+[//]: # (# Bucket name)
+
+[//]: # (bucket_name = 'tech257-ramon-test-boto3')
+
+[//]: # ()
+[//]: # (# Local directory to download files to)
+
+[//]: # (local_directory = '/path/to/save/downloaded/files')
+
+[//]: # ()
+[//]: # (# Call the function to download files from S3 bucket)
+
+[//]: # (download_files_from_s3&#40;s3, bucket_name, local_directory&#41;)
+
+[//]: # ()
+[//]: # (```)
 
 ##### Delete a file
 
@@ -376,18 +452,27 @@ file_name = input("Enter the name of the file to delete: ")
 delete_single_file(s3, bucket_name, file_name)
 
 ```
-###### No input
-```python
-import boto3
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # (###### No input)
 
-# Delete file
-s3.delete_object(Bucket='tech257-ramon-test-boto3', Key='file.txt')
-print("File deleted successfully.")
+[//]: # (```python)
 
-```
+[//]: # (import boto3)
+
+[//]: # ()
+[//]: # (# Create an S3 client)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # ()
+[//]: # (# Delete file)
+
+[//]: # (s3.delete_object&#40;Bucket='tech257-ramon-test-boto3', Key='file.txt'&#41;)
+
+[//]: # (print&#40;"File deleted successfully."&#41;)
+
+[//]: # ()
+[//]: # (```)
 
 ##### Delete all files
 
@@ -422,38 +507,59 @@ delete_files_in_folder(s3, bucket_name, folder_prefix)
 
 
 ```
-###### No input
-```python
-import boto3
 
-def delete_files_in_folder(s3, bucket_name, folder_prefix):
-    # List all objects in the folder
-    response = s3.list_objects_v2(Bucket=bucket_name, Prefix=folder_prefix)
+[//]: # (###### No input)
 
-    # Iterate through objects and delete each one
-    for obj in response.get('Contents', []):
-        object_key = obj['Key']
-        # Delete the object
-        s3.delete_object(Bucket=bucket_name, Key=object_key)
-        print(f"File '{object_key}' deleted successfully.")
+[//]: # (```python)
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # (import boto3)
 
-# Bucket name
-bucket_name = 'name of bucket'
+[//]: # ()
+[//]: # (def delete_files_in_folder&#40;s3, bucket_name, folder_prefix&#41;:)
 
-# Folder prefix (e.g., 'folder/subfolder/') or comment out for all
-folder_prefix = 'folder/subfolder/' 
+[//]: # (    # List all objects in the folder)
 
-# Call the function to delete files in the folder
-delete_files_in_folder(s3, bucket_name, folder_prefix)
+[//]: # (    response = s3.list_objects_v2&#40;Bucket=bucket_name, Prefix=folder_prefix&#41;)
 
-```
+[//]: # ()
+[//]: # (    # Iterate through objects and delete each one)
+
+[//]: # (    for obj in response.get&#40;'Contents', []&#41;:)
+
+[//]: # (        object_key = obj['Key'])
+
+[//]: # (        # Delete the object)
+
+[//]: # (        s3.delete_object&#40;Bucket=bucket_name, Key=object_key&#41;)
+
+[//]: # (        print&#40;f"File '{object_key}' deleted successfully."&#41;)
+
+[//]: # ()
+[//]: # (# Create an S3 client)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # ()
+[//]: # (# Bucket name)
+
+[//]: # (bucket_name = 'name of bucket')
+
+[//]: # ()
+[//]: # (# Folder prefix &#40;e.g., 'folder/subfolder/'&#41; or comment out for all)
+
+[//]: # (folder_prefix = 'folder/subfolder/' )
+
+[//]: # ()
+[//]: # (# Call the function to delete files in the folder)
+
+[//]: # (delete_files_in_folder&#40;s3, bucket_name, folder_prefix&#41;)
+
+[//]: # ()
+[//]: # (```)
 
 ##### Delete the bucket
 
-##### Input 
+###### Input 
 ```python
 
 
@@ -468,18 +574,27 @@ bucket_name = input("Enter the name of the bucket to delete: ")
 s3.delete_bucket(Bucket=bucket_name)
 print("Bucket deleted successfully.")
 ```
-###### No input
-```python
-import boto3
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # (###### No input)
 
-# Delete bucket
-s3.delete_bucket(Bucket='name of bucket')
-print("Bucket deleted successfully.")
+[//]: # (```python)
 
-```
+[//]: # (import boto3)
+
+[//]: # ()
+[//]: # (# Create an S3 client)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # ()
+[//]: # (# Delete bucket)
+
+[//]: # (s3.delete_bucket&#40;Bucket='name of bucket'&#41;)
+
+[//]: # (print&#40;"Bucket deleted successfully."&#41;)
+
+[//]: # ()
+[//]: # (```)
 ##### Delete bucket with contents
 ###### Input
 ```python
@@ -510,32 +625,54 @@ bucket_name = input("Enter the name of the bucket to delete: ")
 delete_bucket_and_contents(s3, bucket_name)
 
 ```
-###### No input
-```python
-import boto3
 
-def delete_bucket_and_contents(s3, bucket_name):
-    # List all objects in the bucket
-    response = s3.list_objects_v2(Bucket=bucket_name)
+[//]: # (###### No input)
 
-    # If the bucket is not empty, delete all objects
-    if 'Contents' in response:
-        for obj in response['Contents']:
-            object_key = obj['Key']
-            s3.delete_object(Bucket=bucket_name, Key=object_key)
-            print(f"File '{object_key}' deleted successfully.")
+[//]: # (```python)
 
-    # Delete the bucket
-    s3.delete_bucket(Bucket=bucket_name)
-    print(f"Bucket '{bucket_name}' deleted successfully.")
+[//]: # (import boto3)
 
-# Create an S3 client
-s3 = boto3.client('s3')
+[//]: # ()
+[//]: # (def delete_bucket_and_contents&#40;s3, bucket_name&#41;:)
 
-# Bucket name
-bucket_name = 'name of bucket'
+[//]: # (    # List all objects in the bucket)
 
-# Call the function to delete bucket and its contents
-delete_bucket_and_contents(s3, bucket_name)
+[//]: # (    response = s3.list_objects_v2&#40;Bucket=bucket_name&#41;)
 
-```
+[//]: # ()
+[//]: # (    # If the bucket is not empty, delete all objects)
+
+[//]: # (    if 'Contents' in response:)
+
+[//]: # (        for obj in response['Contents']:)
+
+[//]: # (            object_key = obj['Key'])
+
+[//]: # (            s3.delete_object&#40;Bucket=bucket_name, Key=object_key&#41;)
+
+[//]: # (            print&#40;f"File '{object_key}' deleted successfully."&#41;)
+
+[//]: # ()
+[//]: # (    # Delete the bucket)
+
+[//]: # (    s3.delete_bucket&#40;Bucket=bucket_name&#41;)
+
+[//]: # (    print&#40;f"Bucket '{bucket_name}' deleted successfully."&#41;)
+
+[//]: # ()
+[//]: # (# Create an S3 client)
+
+[//]: # (s3 = boto3.client&#40;'s3'&#41;)
+
+[//]: # ()
+[//]: # (# Bucket name)
+
+[//]: # (bucket_name = 'name of bucket')
+
+[//]: # ()
+[//]: # (# Call the function to delete bucket and its contents)
+
+[//]: # (delete_bucket_and_contents&#40;s3, bucket_name&#41;)
+
+[//]: # ()
+[//]: # (```)

@@ -107,68 +107,73 @@ We do this so that the app wil be able to first be routed to our NVA then our NV
 
 2. Tick the checkbox to enable IP forwarding to allow us to send traffic from the NVA to the database  <br><br>
 ![img_16.png](images/img_16.png) <br><br>
-3. Now we need to SSH into our NVA and set up IP forwarding on the VM and also set our rules.
-    1. Once we SSH in and first enable IP forwarding.
-    2. We can see it's not running when we do this command `sysctl net.ipv4.ip_forward`  <br><br>
-    3. ![img_17.png](images/img_17.png) <br><br> If it says =0 it means its off  <br><br>
-    4. Run this command to change the file `sudo nano /etc/sysctl.conf`  <br><br>
-    5. ![img_18.png](images/img_18.png)  <br><br> Uncomment the shown line and save the file <br><br>
-    6. We now have to restart the process to update the new variables (apply our changes) use the command `sudo sysctl -p`
-    7. It should now say that it =1 meaning its enabled  <br><br> ![img_19.png](images/img_19.png)  <br><br>
-    8. Now we have to create our IP table rules. This only allows certain packets to be sent so adds to our security.
-       1. We can create a script using `nano script.sh` and then using this script:
-       2. *Generally, we need to update the packages on our instance before running the script, but I have added it to the script to save time.*
-       ```
-       #!/bin/bash
-       # update and upgrade packages
-       sudo apt update -y
-       sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y  
-       # configure iptables
-     
-       echo "Configuring iptables..."
-     
-       # Allows all traffic on the loopback interface (localhost)
-        sudo iptables -A INPUT -i lo -j ACCEPT
-        sudo iptables -A OUTPUT -o lo -j ACCEPT
-        
-        # Allows incoming packets that are part of established or related connections
-        sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-        
-        # Allows outgoing packets that are part of established connections
-        sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT
-        
-        # Drops incoming packets that are marked as invalid
-        sudo iptables -A INPUT -m state --state INVALID -j DROP
-        
-        # Allows incoming SSH connections on port 22
-        sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-        sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-        
-        # Allows forwarding of TCP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 on port 27017 (example for MongoDB)
-        sudo iptables -A FORWARD -p tcp -s 10.0.2.0/24 -d 10.0.4.0/24 --destination-port 27017 -m tcp -j ACCEPT
-        
-        # Allows forwarding of ICMP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 (example for ping)
-        sudo iptables -A FORWARD -p icmp -s 10.0.2.0/24 -d 10.0.4.0/24 -m state --state NEW,ESTABLISHED -j ACCEPT
-        
-        # Sets default policy for incoming packets to DROP (rejects all incoming packets by default)
-        sudo iptables -P INPUT DROP
-        
-        # Sets default policy for forwarded packets to DROP (rejects all forwarded packets by default)
-        sudo iptables -P FORWARD DROP
-
-     
-        echo "Done!"
-        echo ""
+   3. Now we need to SSH into our NVA and set up IP forwarding on the VM and also set our rules.
+      1. Once we SSH in and first enable IP forwarding.
+      2. We can see it's not running when we do this command `sysctl net.ipv4.ip_forward`  <br><br>
+      3. ![img_17.png](images/img_17.png) <br><br> If it says =0 it means its off  <br><br>
+      4. Run this command to change the file `sudo nano /etc/sysctl.conf`  <br><br>
+      5. ![img_18.png](images/img_18.png)  <br><br> Uncomment the shown line and save the file <br><br>
+      6. We now have to restart the process to update the new variables (apply our changes) use the command `sudo sysctl -p`
+      7. It should now say that it =1 meaning its enabled  <br><br> ![img_19.png](images/img_19.png)  <br><br>
+      8. Now we have to create our IP table rules. This only allows certain packets to be sent so adds to our security.
+         1. We can create a script using `nano script.sh` and then using this script:
+         2. *Generally, we need to update the packages on our instance before running the script, but I have added it to the script to save time.*
+            ```
+            #!/bin/bash
+            # update and upgrade packages
+            sudo apt update -y
+            sudo DEBIAN_FRONTEND=noninteractive apt upgrade -y  
+            # configure iptables
          
-        # make iptables rules persistent
-        # it will ask for user input by default
+            echo "Configuring iptables..."
          
-        echo "Make iptables rules persistent..."
-        sudo DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -y
-        echo "Done!"
-        echo ""
-        ```
-        3. Save it and run it using `bash script.sh`
+             # Allows all traffic on the loopback interface (localhost). 
+             # The loopback interface is a virtual network interface that your computer uses to communicate with itself. 
+             # This is commonly used by applications and services running on the system to communicate internally without going through the network stack.
+             sudo iptables -A INPUT -i lo -j ACCEPT  # Allow incoming traffic on the loopback interface
+             sudo iptables -A OUTPUT -o lo -j ACCEPT # Allow outgoing traffic on the loopback interface
+            
+             # Allows incoming packets that are part of established or related connections
+             sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT  # Allow incoming packets related to established connections
+            
+             # Allows outgoing packets that are part of established connections
+             sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT  # Allow outgoing packets related to established connections
+            
+             # Drops incoming packets that are marked as invalid
+             sudo iptables -A INPUT -m state --state INVALID -j DROP  # Drop incoming packets that are marked as invalid
+            
+             # Allows incoming SSH connections on port 22
+             sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT  # Allow incoming SSH connections on port 22
+             sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT  # Allow outgoing responses to SSH connections
+            
+             # Allows forwarding of TCP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 on port 27017 (example for MongoDB)
+             sudo iptables -A FORWARD -p tcp -s 10.0.2.0/24 -d 10.0.4.0/24 --destination-port 27017 -m tcp -j ACCEPT  # Allow forwarding of TCP traffic from one subnet to another on specified port
+            
+             # Allows forwarding of ICMP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 (example for ping)
+             sudo iptables -A FORWARD -p icmp -s 10.0.2.0/24 -d 10.0.4.0/24 -m state --state NEW,ESTABLISHED -j ACCEPT  # Allow forwarding of ICMP (ping) traffic from one subnet to another
+            
+             # Sets default policy for incoming packets to DROP (rejects all incoming packets by default)
+             sudo iptables -P INPUT DROP  # Set default policy for incoming packets to DROP
+            
+             # Sets default policy for forwarded packets to DROP (rejects all forwarded packets by default)
+             sudo iptables -P FORWARD DROP  # Set default policy for forwarded packets to DROP
+    
+    
+         
+              echo "Done!"
+              echo ""
+                 
+              # make iptables rules persistent
+              # it will ask for user input by default
+                 
+              echo "Make iptables rules persistent..."
+              sudo DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -y
+              echo "Done!"
+              echo ""
+              ```
+              - More information on route tables at bottom of page <br><br>
+   
+         3. Save it and run it using `bash script.sh` <br> <br>
 4. Now we need to create a route table to actually send traffic to this NVA
 
 
@@ -205,7 +210,83 @@ We do this so that the app wil be able to first be routed to our NVA then our NV
 ![img_26.png](images/img_26.png) <br><br>
 3. Make sure the ***deny*** rule has the lowest priority (highest number) so it executes after above rules. If you don't it will just deny everything as that's higher priority. Also ensure you delete the regular SSH from anywhere rule.
 4. Check to see if app still running.
-5. We can also change our bind ip on our mongodb to not allow requests from anywhere to further enhance security
+5. We can also change our bind ip on our mongodb to not allow requests from anywhere to further enhance security.
+
+
+#### Extra information on route tables
+
+
+1. **Loopback Interface Allowance**: 
+    - The commands:
+        ```bash
+        sudo iptables -A INPUT -i lo -j ACCEPT
+        sudo iptables -A OUTPUT -o lo -j ACCEPT
+        ```
+        allow all traffic on the loopback interface (`lo`). The loopback interface is a virtual network interface that your computer uses to communicate with itself. This is commonly used by applications and services running on the system to communicate internally without going through the network stack.
+
+2. **Established and Related Connections**:
+    - The command:
+        ```bash
+        sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+        ```
+        allows incoming packets that are part of established or related connections. This is important for maintaining existing connections and ensuring that packets related to those connections (such as responses to outbound requests) are allowed.
+
+3. **Outgoing Established Connections**:
+    - The command:
+        ```bash
+        sudo iptables -A OUTPUT -m state --state ESTABLISHED -j ACCEPT
+        ```
+        allows outgoing packets that are part of established connections. This ensures that responses to outgoing requests are allowed to leave the system.
+
+Allowing traffic from established connections ensures that responses to outgoing requests are permitted. For example, if your system initiates a request to a remote server (such as a web server), the response from that server is part of an established connection. By allowing traffic from established connections, you permit these response packets to return to your system, completing the communication.
+
+In essence, established connections are those connections that have been set up and are currently in use, either for sending or receiving data. It's important to allow traffic from established connections to ensure that legitimate communication can occur without being blocked by firewall rules.
+
+
+4. **Invalid Packets Dropping**:
+    - The command:
+        ```bash
+        sudo iptables -A INPUT -m state --state INVALID -j DROP
+        ```
+        drops incoming packets that are marked as invalid. This helps protect against various types of attacks and ensures that only valid packets are processed further.
+
+5. **SSH Connection Allowance**:
+    - The commands:
+        ```bash
+        sudo iptables -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+        sudo iptables -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+        ```
+        allow incoming SSH connections on port 22 (default SSH port) and allow outgoing responses to those connections. This is important for remote access to the system over SSH.
+
+6. **Forwarding TCP Traffic**:
+    - The command:
+        ```bash
+        sudo iptables -A FORWARD -p tcp -s 10.0.2.0/24 -d 10.0.4.0/24 --destination-port 27017 -m tcp -j ACCEPT
+        ```
+        allows forwarding of TCP traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24 on port 27017. This is commonly used for applications like MongoDB.
+
+7. **Forwarding ICMP Traffic**:
+    - The command:
+        ```bash
+        sudo iptables -A FORWARD -p icmp -s 10.0.2.0/24 -d 10.0.4.0/24 -m state --state NEW,ESTABLISHED -j ACCEPT
+        ```
+        allows forwarding of ICMP (ping) traffic from subnet 10.0.2.0/24 to subnet 10.0.4.0/24. This allows machines in one subnet to ping machines in another subnet.
+
+8. **Default Policy Setting for Incoming Packets**:
+    - The command:
+        ```bash
+        sudo iptables -P INPUT DROP
+        ```
+        sets the default policy for incoming packets to DROP, which means that all incoming packets that do not match any specific rule will be dropped (rejected).
+
+9. **Default Policy Setting for Forwarded Packets**:
+    - The command:
+        ```bash
+        sudo iptables -P FORWARD DROP
+        ```
+        sets the default policy for forwarded packets to DROP, which means that all forwarded packets that do not match any specific rule will be dropped (rejected).
+
+These iptables rules help manage network traffic on the system, allowing certain types of traffic while blocking others based on specified criteria.
 
 
 
